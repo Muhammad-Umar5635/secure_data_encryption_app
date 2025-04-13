@@ -1,0 +1,297 @@
+[
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "register_user",
+        "importPath": "auth",
+        "description": "auth",
+        "isExtraImport": true,
+        "detail": "auth",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate_user",
+        "importPath": "auth",
+        "description": "auth",
+        "isExtraImport": true,
+        "detail": "auth",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_data",
+        "importPath": "auth",
+        "description": "auth",
+        "isExtraImport": true,
+        "detail": "auth",
+        "documentation": {}
+    },
+    {
+        "label": "encrypt_message",
+        "importPath": "encryption",
+        "description": "encryption",
+        "isExtraImport": true,
+        "detail": "encryption",
+        "documentation": {}
+    },
+    {
+        "label": "decrypt_message",
+        "importPath": "encryption",
+        "description": "encryption",
+        "isExtraImport": true,
+        "detail": "encryption",
+        "documentation": {}
+    },
+    {
+        "label": "load_data",
+        "importPath": "data_store",
+        "description": "data_store",
+        "isExtraImport": true,
+        "detail": "data_store",
+        "documentation": {}
+    },
+    {
+        "label": "save_data",
+        "importPath": "data_store",
+        "description": "data_store",
+        "isExtraImport": true,
+        "detail": "data_store",
+        "documentation": {}
+    },
+    {
+        "label": "get_session",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "initialize_session",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "is_locked_out",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "base64",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "base64",
+        "description": "base64",
+        "detail": "base64",
+        "documentation": {}
+    },
+    {
+        "label": "hashlib",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "hashlib",
+        "description": "hashlib",
+        "detail": "hashlib",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "Fernet",
+        "importPath": "cryptography.fernet",
+        "description": "cryptography.fernet",
+        "isExtraImport": true,
+        "detail": "cryptography.fernet",
+        "documentation": {}
+    },
+    {
+        "label": "users",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "users = load_data()\n# Initialize Streamlit session state\ninitialize_session()\nst.title(\"🔐 Secure Data Encryption App\")\nmenu = [\"Login\", \"Register\"]\nchoice = st.sidebar.selectbox(\"Select Action\", menu)\nif choice == \"Register\":\n    st.subheader(\"Create Account\")\n    username = st.text_input(\"Username\")\n    passkey = st.text_input(\"Passkey\", type=\"password\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "menu",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "menu = [\"Login\", \"Register\"]\nchoice = st.sidebar.selectbox(\"Select Action\", menu)\nif choice == \"Register\":\n    st.subheader(\"Create Account\")\n    username = st.text_input(\"Username\")\n    passkey = st.text_input(\"Passkey\", type=\"password\")\n    if st.button(\"Register\"):\n        success = register_user(username, passkey, users)\n        if success:\n            st.success(\"User registered successfully!\")",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "choice",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "choice = st.sidebar.selectbox(\"Select Action\", menu)\nif choice == \"Register\":\n    st.subheader(\"Create Account\")\n    username = st.text_input(\"Username\")\n    passkey = st.text_input(\"Passkey\", type=\"password\")\n    if st.button(\"Register\"):\n        success = register_user(username, passkey, users)\n        if success:\n            st.success(\"User registered successfully!\")\n            save_data(users)",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "hash_passkey_pbkdf2",
+        "kind": 2,
+        "importPath": "auth",
+        "description": "auth",
+        "peekOfCode": "def hash_passkey_pbkdf2(passkey, salt=None):\n    if salt is None:\n        salt = os.urandom(16)\n    hashed = hashlib.pbkdf2_hmac('sha256', passkey.encode(), salt, 100000)\n    return base64.b64encode(salt).decode(), base64.b64encode(hashed).decode()\ndef verify_passkey_pbkdf2(passkey, stored_salt, stored_hash):\n    salt = base64.b64decode(stored_salt)\n    new_hash = hashlib.pbkdf2_hmac('sha256', passkey.encode(), salt, 100000)\n    return base64.b64encode(new_hash).decode() == stored_hash\ndef register_user(username, passkey, users):",
+        "detail": "auth",
+        "documentation": {}
+    },
+    {
+        "label": "verify_passkey_pbkdf2",
+        "kind": 2,
+        "importPath": "auth",
+        "description": "auth",
+        "peekOfCode": "def verify_passkey_pbkdf2(passkey, stored_salt, stored_hash):\n    salt = base64.b64decode(stored_salt)\n    new_hash = hashlib.pbkdf2_hmac('sha256', passkey.encode(), salt, 100000)\n    return base64.b64encode(new_hash).decode() == stored_hash\ndef register_user(username, passkey, users):\n    if username in users:\n        return False\n    salt, hashed_passkey = hash_passkey_pbkdf2(passkey)\n    users[username] = {\n        \"salt\": salt,",
+        "detail": "auth",
+        "documentation": {}
+    },
+    {
+        "label": "register_user",
+        "kind": 2,
+        "importPath": "auth",
+        "description": "auth",
+        "peekOfCode": "def register_user(username, passkey, users):\n    if username in users:\n        return False\n    salt, hashed_passkey = hash_passkey_pbkdf2(passkey)\n    users[username] = {\n        \"salt\": salt,\n        \"hashed_passkey\": hashed_passkey,\n        \"data\": \"\",\n        \"failed_attempts\": 0\n    }",
+        "detail": "auth",
+        "documentation": {}
+    },
+    {
+        "label": "authenticate_user",
+        "kind": 2,
+        "importPath": "auth",
+        "description": "auth",
+        "peekOfCode": "def authenticate_user(username, passkey, users):\n    if username not in users:\n        return False, \"User does not exist.\"\n    user = users[username]\n    locked, wait_time = is_locked_out(user)\n    if locked:\n        return False, f\"Too many failed attempts. Try again in {wait_time} seconds.\"\n    if verify_passkey_pbkdf2(passkey, user[\"salt\"], user[\"hashed_passkey\"]):\n        user[\"failed_attempts\"] = 0\n        return True, \"Authenticated\"",
+        "detail": "auth",
+        "documentation": {}
+    },
+    {
+        "label": "get_user_data",
+        "kind": 2,
+        "importPath": "auth",
+        "description": "auth",
+        "peekOfCode": "def get_user_data(users, username):\n    return users[username]",
+        "detail": "auth",
+        "documentation": {}
+    },
+    {
+        "label": "load_data",
+        "kind": 2,
+        "importPath": "data_store",
+        "description": "data_store",
+        "peekOfCode": "def load_data(file_path='data.json'):\n    if os.path.exists(file_path):\n        with open(file_path, 'r') as f:\n            return json.load(f)\n    return {}\ndef save_data(data, file_path='data.json'):\n    with open(file_path, 'w') as f:\n        json.dump(data, f)",
+        "detail": "data_store",
+        "documentation": {}
+    },
+    {
+        "label": "save_data",
+        "kind": 2,
+        "importPath": "data_store",
+        "description": "data_store",
+        "peekOfCode": "def save_data(data, file_path='data.json'):\n    with open(file_path, 'w') as f:\n        json.dump(data, f)",
+        "detail": "data_store",
+        "documentation": {}
+    },
+    {
+        "label": "encrypt_message",
+        "kind": 2,
+        "importPath": "encryption",
+        "description": "encryption",
+        "peekOfCode": "def encrypt_message(message):\n    return cipher_suite.encrypt(message.encode()).decode()\ndef decrypt_message(encrypted_message):\n    return cipher_suite.decrypt(encrypted_message.encode()).decode()",
+        "detail": "encryption",
+        "documentation": {}
+    },
+    {
+        "label": "decrypt_message",
+        "kind": 2,
+        "importPath": "encryption",
+        "description": "encryption",
+        "peekOfCode": "def decrypt_message(encrypted_message):\n    return cipher_suite.decrypt(encrypted_message.encode()).decode()",
+        "detail": "encryption",
+        "documentation": {}
+    },
+    {
+        "label": "key",
+        "kind": 5,
+        "importPath": "encryption",
+        "description": "encryption",
+        "peekOfCode": "key = Fernet.generate_key()\ncipher_suite = Fernet(key)\ndef encrypt_message(message):\n    return cipher_suite.encrypt(message.encode()).decode()\ndef decrypt_message(encrypted_message):\n    return cipher_suite.decrypt(encrypted_message.encode()).decode()",
+        "detail": "encryption",
+        "documentation": {}
+    },
+    {
+        "label": "cipher_suite",
+        "kind": 5,
+        "importPath": "encryption",
+        "description": "encryption",
+        "peekOfCode": "cipher_suite = Fernet(key)\ndef encrypt_message(message):\n    return cipher_suite.encrypt(message.encode()).decode()\ndef decrypt_message(encrypted_message):\n    return cipher_suite.decrypt(encrypted_message.encode()).decode()",
+        "detail": "encryption",
+        "documentation": {}
+    },
+    {
+        "label": "is_locked_out",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def is_locked_out(user_data):\n    if 'lockout_time' in user_data:\n        elapsed = time.time() - user_data['lockout_time']\n        if elapsed < 300:\n            return True, int(300 - elapsed)\n        else:\n            user_data['failed_attempts'] = 0\n            del user_data['lockout_time']\n    return False, 0\ndef initialize_session():",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "initialize_session",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def initialize_session():\n    if 'user' not in st.session_state:\n        st.session_state.user = None\n    if 'login_attempts' not in st.session_state:\n        st.session_state.login_attempts = 0\ndef get_session():\n    return st.session_state",
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "get_session",
+        "kind": 2,
+        "importPath": "utils",
+        "description": "utils",
+        "peekOfCode": "def get_session():\n    return st.session_state",
+        "detail": "utils",
+        "documentation": {}
+    }
+]
